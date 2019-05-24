@@ -30,6 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // prepare Data
 
+    const getFormattedDate = date => {
+      const newDate = new Date(date);
+      return `${("0" + (newDate.getMonth() + 1)).slice(-2)}/${("0" + newDate.getDay()).slice(-2)}/${newDate.getFullYear().toString().substr(-2)}`;
+    }
+
     const prepareData = data => {
        userData.push({
         image: data.picture.large,
@@ -38,10 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
         city: data.location.city,
         phone: data.phone,
         address: `${data.location.street}, ${data.location.city} ${data.location.state} ${data.location.postcode} `,
-        birthday: `Birthday: ${data.dob.date.substring(0, 10).replace(/-/g, "/")}`
+        birthday: `Birthday: ${getFormattedDate(data.dob.date.substring(0, 10))}`
       });
     return userData;
     }
+
     // render UI
 
     const styleElement = (element, elementClass = '', id = '', innerHTML = '' ) => {
