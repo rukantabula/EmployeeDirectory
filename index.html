@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Employees Directory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<head>
-  <title>Employees Directory</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/normalize.css" />
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
+  <body>
+    <div class="container">
+      <p class="header">
+        AWESOME STARTUP EMPLOYEE DIRECTORY
+      </p>
+      <p class="loader">
+        loading...
+      </p>
+      <div class="employees"></div>
 
-<body>
-  <div class="container">
-    <p class="header">
-      AWESOME STARTUP EMPLOYEE DIRECTORY
-    </p>
-    <div class="employees"></div>
+      <div class="popup" id="popup">
+        <a class="hide">X</a>
+        <img class="img-popup" />
+        <div class="name-popup"></div>
+        <div class="email-popup"></div>
+        <div class="city-popup"></div>
+        <div class="divide-popup"></div>
+        <div class="phone-popup"></div>
+        <div class="address-popup"></div>
+        <div class="birthday-popup"></div>
+      </div>
+    </div>
 
-  </div>
-
-  <!-- <a href="#" onclick="show('popup')">Show popup (box-shadow)</a>
-    <div class="popup" id="popup">
-      <p>This is a popup!</p>
-      <p>Overlay uses <b>box-shadow</b>.</p>
-      <p>(Doesn't block elements on background)</p>
-      <a href="#" onclick="hide('popup')">Ok!</a>
-    </div> -->
-  <script src="js/app.js"></script>
-</body>
-
+    <script src="js/app.js"></script>
+  </body>
 </html>

@@ -19,21 +19,31 @@ p {
 
 
 .container {
-    background-color: #f5f4f4;
-    margin: 2%;
+    background-color: #fff;
+    margin: 2% 8%;
     padding: 20px;
+    border-radius: 5px;
 }
 
-.header {
-    font-size: 15px;
+.header,
+.loader {
+    font-size: 13px;
     font-family:'Roboto', sans-serif;
-    font-weight: 100;
+    font-weight: bold;
+    letter-spacing: 2px;
     margin-bottom: 20px;
+    padding: 10px;
+}
+
+.loader {
+  padding: 0 10px;
+  opacity: .8;
+  font-style: italic;
 }
 
 .employees {
 display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   color: #fff;
   grid-gap: 20px;
@@ -44,16 +54,31 @@ display: grid;
     color: #fff;
     border-radius: 10px;
     padding: 20px;
-    font-size: 150%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px  solid  rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
   }
 
+
+.box:hover {
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
   .profile-img {
-    width: 85px;
-    height: 85px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     display: block;
  }
+
+ .img-popup {
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  border: 1px  solid  rgba(0, 0, 0, .2);
+}
 
  .profile-img,
  .details {
@@ -62,7 +87,7 @@ display: grid;
 
  .details {
      padding-left: 20px;
-     font-size: 14px;
+     font-size: 11px;
  }
 
  .email{
@@ -77,22 +102,51 @@ display: grid;
 .popup {
     display: none;
     position: fixed;
-    padding: 10px;
+    padding: 20px;
     width: 280px;
     left: 50%;
     margin-left: -150px;
-    height: 180px;
-    top: 50%;
+    height: auto;
+    top: 30%;
     margin-top: -100px;
     background: #FFF;
     z-index: 20;
+    border-radius: 5px;
+    animation: popup 0.7s;
   }
   
   #popup {
-    -webkit-box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
-    box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.7);
+    box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.7);
+  }
+
+  .popup div {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .email-popup,
+  .city-popup,
+  .phone-popup,
+  .address-popup,
+  .birthday-popup
+   {
+    font-size: 12px;
+    opacity: .8;
+    margin-top: 7px;
+  }
+
+  .divide-popup {
+    height: 1px;
+    margin: 25px auto ;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   
+  .name-popup {
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 18px;
+  }
   
   a,
   a:visited {
@@ -108,10 +162,7 @@ display: grid;
     text-decoration: underline;
   }
   
-  .popup a,
-  .popup a:visited {
-    color: #1abc9c;
-  }
+
   
   p {
       margin: 1em 0;
@@ -120,3 +171,32 @@ display: grid;
   p+p+p {
       font-size: 60%;
   }
+
+  .hide {
+    float: right;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    transition: transform 0.7s ease-in-out;
+  }
+
+  .hide:hover {
+    cursor: pointer;
+    transform: scale(1.6);
+    color: black;
+    text-decoration: none;
+  }
+
+  @keyframes popup {
+    0%{
+      transform: scale(1);
+    }
+    50%{
+      transform: scale(1.1);
+    }
+
+    100%{
+      transform: scale(1);
+    }
+  }
+
+

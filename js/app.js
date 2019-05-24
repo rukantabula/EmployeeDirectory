@@ -1,70 +1,105 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", () => {
-    const url = 'https://randomuser.me/api/'
+    const url = 'https://randomuser.me/api';
+    const loader = document.querySelector('.loader');
+    const employeeSection = document.querySelector('.employees');
+    const employeeList = document.querySelectorAll('.employees');
+    var userData = [];
 
-    async function getJSON(url) {
-        try {
-            const response = await fetch(url);
-            return await response.json();
-        } catch (error) {
-            throw error;
-        }
+
+    // get Data
+
+    const getJSON = async () => {
+      try {
+        const response = await fetch(url);
+        return await response.json();
+      } catch (error) {
+        loader.textContent = `Sorry Something went Wrong! - ${error}`;
+        throw error;
+      }
     };
 
-    function prepareData() {
-        for (var i = 0; i < 12; i ++) {
-            getJSON(url)
-            .then(data => renderData(data.results[0]));
-        }
+    const getUsers = async () => {
+        Array(12).fill().map( async () => {
+            await getJSON()
+              .then(users =>  prepareData(users.results[0]))
+              .then(data => userData.length == 12 ?  renderData(data) : (loader.style.display = "block")
+              );
+        }); 
+    };
+
+    // prepare Data
+
+    const prepareData = data => {
+       userData.push({
+        image: data.picture.large,
+        name: `${data.name.first} ${data.name.last}`,
+        email: data.email,
+        city: data.location.city,
+        phone: data.phone,
+        address: `${data.location.street}, ${data.location.state} `,
+        birthday: `Birthday: ${data.dob.date.substring(0, 10).replace(/-/g, "/")}`
+      });
+    return userData;
     }
 
-    prepareData(); 
+    // render UI
 
-    function renderData(data) {
-            console.log(data)
-        
-            const box = document.createElement('div');
-            box.classList.add('box');
+    const styleElement = (element, elementClass = '', id = '', innerHTML = '' ) => {
+        const renderElement = document.createElement(`${element}`);
+        renderElement.classList.add(elementClass);
+        renderElement.id = id;
+        renderElement.innerHTML = innerHTML;
+        return renderElement;
+      }
+    
+      const styleImg = (elementClass, name, alt, id) => {
+        const elementImg = styleElement('img', elementClass, id);
+        elementImg.src = name;
+        elementImg.alt = alt;
+        return elementImg;
+      }
 
-            const profileImg =  document.createElement('img');
-            profileImg.classList.add('profile-img');
-            profileImg.src = data.picture.large;
-
-            const details = document.createElement('div');
-            details.classList.add('details');
-
-            const name = document.createElement('span');
-            const nameInnerHtml = `<label class="name"><strong>${data.name.first} ${data.name.last}</strong></label>`;
-            name.innerHTML = nameInnerHtml;
-
-            const email = document.createElement('p');
-            email.classList.add('email');
-            email.innerHTML = data.email;
-
-            const city = document.createElement('p');
-            city.classList.add('city');
-            city.innerHTML = data.location.city;
+    const renderData = data => {
+        loader.style.display = 'none';
+        data.forEach((user, i) => {
+            const box = styleElement('div', 'box', i);
+            const profileImg = styleImg('profile-img', user.image, user.image, i);
+            const details = styleElement('div', 'details', i);
+            const name = styleElement("span", "span", i, `<label class="name"><strong id=${i}>${ user.name }</strong></label>` );
+            const email = styleElement('p', 'email', i, user.email);
+            const city = styleElement('p', 'city', i, user.city);
 
             details.appendChild(name);
             details.appendChild(email);
             details.appendChild(city);
-
             box.appendChild(profileImg);
             box.appendChild(details);
-
-            const employees = document.querySelector('.employees');
-            employees.appendChild(box);
+            employeeSection.appendChild(box);
+        });
     }
 
-    var show = id => {
-        document.getElementById(id).style.display = 'block';
+    const addEvents = () => {
+        employeeList.forEach(item => {
+            item.addEventListener('click', e => {
+                const index = e.target.id;
+                document.querySelector('.img-popup').src = userData[index].image;
+                document.querySelector('.name-popup').innerHTML = userData[index].name;
+                document.querySelector('.email-popup').innerHTML = userData[index].email;
+                document.querySelector('.city-popup').innerHTML = userData[index].city;
+                document.querySelector('.phone-popup').innerHTML = userData[index].phone;
+                document.querySelector('.address-popup').innerHTML = userData[index].address;
+                document.querySelector('.birthday-popup').innerHTML = userData[index].birthday;
+                document.querySelector('#popup').style.display = 'block';
+            });
+        });
+        document.querySelector('.hide').addEventListener('click', e => {
+            document.querySelector('#popup').style.display = 'none';
+        });
     }
 
-    var hide = id => {
-        document.getElementById(id).style.display = 'none';
-    }
-
-
+    getUsers();
+    addEvents()
 });
 
 
