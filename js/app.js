@@ -37,12 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
         email: data.email,
         city: data.location.city,
         phone: data.phone,
-        address: `${data.location.street}, ${data.location.state} `,
+        address: `${data.location.street}, ${data.location.city} ${data.location.state} ${data.location.postcode} `,
         birthday: `Birthday: ${data.dob.date.substring(0, 10).replace(/-/g, "/")}`
       });
     return userData;
     }
-
     // render UI
 
     const styleElement = (element, elementClass = '', id = '', innerHTML = '' ) => {

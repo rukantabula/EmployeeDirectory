@@ -102,8 +102,8 @@ display: grid;
 .popup {
     display: none;
     position: fixed;
-    padding: 20px;
-    width: 280px;
+    padding: 30px;
+    width: 340px;
     left: 50%;
     margin-left: -150px;
     height: auto;
